@@ -4,26 +4,26 @@
 
 using namespace std;
 
-void DatePlusDays(struct tm* date, int days) {
-    time_t date_seconds = mktime(date) + (days * 24 * 60 * 60);
+//add day to startDate
+void addDaytoDate(struct tm* startDate, int days) {
+    time_t second = mktime(startDate) + (days * 24 * 60 * 60);
 
-    *date = *localtime(&date_seconds);
+    *startDate = *localtime(&second);
 }
 
 int main() {
     struct tm date = {0, 0, 0};
 
     int year = 2010;
-    int month = 2;  // February
-    int day = 26;   // 26th
+    int month = 2;
+    int day = 26;
 
     date.tm_year = year - 1900;
     date.tm_mon = month - 1;
     date.tm_mday = day;
 
-    DatePlusDays(&date, 1);
+    addDaytoDate(&date, 2);
 
-    // Show time/date using default formatting
     std::cout << date.tm_mday << std::endl;
     return 0;
 }
