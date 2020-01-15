@@ -5,15 +5,25 @@
             "label": "build",
             "type": "shell",
             "command": "g++",
-            "args": ["testCircle.cpp", "-o", "${workspaceFolderBasename}"],
+            "args": [
+                "testCircle.cpp",
+                "-o",
+                "${workspaceFolderBasename}"
+            ],
             "problemMatcher": []
         },
         {
             "label": "run C++",
             "type": "shell",
             "command": "./${workspaceFolderBasename}",
-            "dependsOn": ["build"],
-            "problemMatcher": []
+            "dependsOn": [
+                "build"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
