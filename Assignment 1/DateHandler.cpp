@@ -9,6 +9,12 @@ DateHandler::DateHandler(int day, int month, int year) {
     this->year = year;
 }
 
+DateHandler::DateHandler() {
+    this->day = 0;
+    this->month = 0;
+    this->year = 0;
+}
+
 int DateHandler::getDay() {
     return day;
 }
@@ -39,4 +45,8 @@ void DateHandler::addDay(int days) {
     this->day = date.tm_mday;
     this->month = date.tm_mon + 1;
     this->year = date.tm_year + 1900;
+}
+
+void DateHandler::print() {
+    cout << day << "/" << month << "/" << year << endl;
 }

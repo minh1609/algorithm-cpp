@@ -1,3 +1,6 @@
+#ifndef DATEHANDLER_H
+#define DATEHANDLER_H
+
 using namespace std;
 
 #include <ctime>
@@ -9,14 +12,20 @@ class DateHandler {
     int year;
 
    public:
+    DateHandler(int day, int month, int year);
+    DateHandler();
+
     int getDay();
     int getYear();
     int getMonth();
 
-    DateHandler(int day, int month, int year);
     //add day to date, day < 0 to substract
     void addDay(int day);
 
     //compare date to date
     int compare(DateHandler d2);
+
+    void print();
 };
+
+#endif
