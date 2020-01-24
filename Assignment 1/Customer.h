@@ -8,6 +8,7 @@ class Customer {
     string customerId;
     int bedRequest;
     DateHandler checkIn;
-    DateHandler checOut;
-    Customer(string id, int bedRequest, DateHandler checkIn, DateHandler checkOut);
+    DateHandler checkOut;
+    Customer(DateHandler checkIn, string customerId, int bed, DateHandler checkOut);
+    void print();
 };

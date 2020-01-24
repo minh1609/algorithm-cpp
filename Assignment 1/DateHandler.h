@@ -14,6 +14,7 @@ class DateHandler {
    public:
     DateHandler(int day, int month, int year);
     DateHandler();
+    DateHandler(string date);
 
     int getDay();
     int getYear();
@@ -23,7 +24,7 @@ class DateHandler {
     void addDay(int day);
 
     //compare date to date
-    int compare(DateHandler d2);
+    bool isSmallerOrEqual(DateHandler d2);
 
     void print();
 };

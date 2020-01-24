@@ -5,9 +5,11 @@
 
 using namespace std;
 
-RoomLinkedList::RoomLinkedList() {
+RoomLinkedList::RoomLinkedList(int max) {
     head = nullptr;
     tail = nullptr;
+    size = 0;
+    maxSize = max;
 }
 
 void RoomLinkedList::addRoom(Room newRoom) {
@@ -23,6 +25,7 @@ void RoomLinkedList::addRoom(Room newRoom) {
         tail->next = temp;
         tail = temp;
     }
+    size++;
 }
 
 void RoomLinkedList::print() {
@@ -39,4 +42,51 @@ void RoomLinkedList::print() {
             temp = temp->next;
         }
     }
+}
+
+int RoomLinkedList::getSize() {
+    return size;
+}
+
+void RoomLinkedList::remove(node* n) {
+    if (size == 0 || size == 1) {
+        return;
+    }
+    if (head == n) {
+        head->room = head->next->room;
+        n = head->next;
+        head->next = head->next->next;
+        delete n;
+        return;
+    } else {
+        node* before = head;
+        while (before->next != nullptr && before->next != n) {
+            before = before->next;
+        }
+        if (before->next == nullptr) {
+            return;
+        }
+        before->next = before->next->next;
+        delete n;
+    }
+}
+
+void RoomLinkedList::removeUnusedRoom(DateHandler today) {
+    node* tmp = new node;
+    tmp = head;
+    while (tmp != nullptr) {
+        if (tmp->room.checkOut.isSmallerOrEqual(today)) {
+            //remove that node
+            node* next = tmp->next;
+            remove(tmp);
+            size--;
+            tmp = next;
+        } else {
+            tmp = tmp->next;
+        }
+    }
+}
+
+int RoomLinkedList::available() {
+    return maxSize - size;
 }

@@ -2,6 +2,7 @@ using namespace std;
 
 #include "DateHandler.h"
 #include <ctime>
+#include <sstream>
 
 DateHandler::DateHandler(int day, int month, int year) {
     this->day = day;
@@ -13,6 +14,21 @@ DateHandler::DateHandler() {
     this->day = 0;
     this->month = 0;
     this->year = 0;
+}
+
+DateHandler::DateHandler(string date) {
+    stringstream ss(date);
+    vector<int> result;
+
+    while (ss.good()) {
+        string tmp;
+        getline(ss, tmp, '/');
+        int num = stoi(tmp);
+        result.push_back(num);
+    }
+    this->day = result[0];
+    this->month = result[1];
+    this->year = result[2];
 }
 
 int DateHandler::getDay() {
@@ -48,5 +64,16 @@ void DateHandler::addDay(int days) {
 }
 
 void DateHandler::print() {
-    cout << day << "/" << month << "/" << year << endl;
+    cerr << day << "/" << month << "/" << year;
+}
+
+bool DateHandler::isSmallerOrEqual(DateHandler d2) {
+    if (this->year < d2.getYear()) {
+        return true;
+    } else if (this->year == d2.getYear() && this->month <= d2.getMonth()) {
+        return true;
+    } else if (this->year == d2.getYear() && this->month == d2.getMonth() && this->day <= d2.getDay()) {
+        return true;
+    } else
+        return false;
 }
