@@ -11,7 +11,7 @@ class ER {
     priority_queue<T> q;
 
    public:
-    // ~ER();
+    ~ER();
     ER();
     void insert(T unit);
     void remove();

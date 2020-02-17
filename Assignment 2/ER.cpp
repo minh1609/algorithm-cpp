@@ -7,6 +7,11 @@ ER<T>::ER() {
 }
 
 template <typename T>
+ER<T>::~ER() {
+    q.empty();
+}
+
+template <typename T>
 void ER<T>::insert(T unit) {
     q.push(unit);
 }

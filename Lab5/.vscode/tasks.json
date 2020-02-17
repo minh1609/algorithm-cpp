@@ -5,7 +5,7 @@
             "label": "build",
             "type": "shell",
             "command": "g++",
-            "args": ["semiHanoi.cpp", "-o", "${workspaceFolderBasename}"],
+            "args": ["main.cpp", "-o", "${workspaceFolderBasename}"],
             "problemMatcher": []
         },
         {
