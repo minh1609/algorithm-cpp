@@ -60,10 +60,10 @@ void printTrie(Node* root, int arr[], int top) {
     }
 }
 
-void makeHuffmanTree(char data[], int freq[], int size) {
+void makeHuffmanTree(vector<char> data, vector<int> freq) {
     priority_queue<Node*, vector<Node*>, NodeCompare> q;
 
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < data.size(); i++) {
         Node* newNode = new Node(data[i], freq[i]);
         q.push(newNode);
     }
@@ -74,7 +74,7 @@ void makeHuffmanTree(char data[], int freq[], int size) {
     printTrie(root, arr, top);
 }
 
-void printVector(vector<char> v) {
+void printVector(vector<int> v) {
     for (int i = 0; i < v.size(); i++) {
         cerr << v[i] << " ";
     }
@@ -82,23 +82,22 @@ void printVector(vector<char> v) {
 
 int main() {
     string str = "EYEWITNESSNEWS";
-    vector<char> v;
+    vector<char> data;
+    vector<int> freq;
 
     for (int i = 0; i < str.size(); i++) {
-        if (count(v.begin(), v.end(), str[i]) > 0) {
-            cerr << "dd";
+        if (count(data.begin(), data.end(), str[i]) > 0) {
+            //
         } else {
-            v.push_back(str[i]);
+            data.push_back(str[i]);
         }
     }
 
-    //printVector(v);
-    char data[v.size()];
+    for (int i = 0; i < data.size(); i++) {
+        int f = count(str.begin(), str.end(), data[i]);
+        freq.push_back(f);
+    }
 
-    // char data[] = {'a', 'b', 'c', 'd', 'e', 'f'};
-    // int freq[] = {5, 9, 12, 13, 16, 45};
-    // int size = sizeof(data) / sizeof(data[0]);
-
-    // makeHuffmanTree(data, freq, size);
+    makeHuffmanTree(data, freq);
     return 0;
 }
