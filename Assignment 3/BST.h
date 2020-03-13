@@ -6,13 +6,13 @@
 using namespace std;
 
 template <typename T>
+
 class BST {
     struct node {
         T data;
         node *left;
         node *right;
     };
-
     //insert x to node n
     node *insert(T x, node *n) {
         if (n == nullptr) {
@@ -82,12 +82,16 @@ class BST {
         inorder(n->right);
     }
 
-    void inorder(node *n, BST<T> t) {
-        if (n == nullptr)
-            return;
-        inorder(n->left);
-        t.insert(n->data);
-        inorder(n->right);
+    //merge 2 nodes
+    node *mergeNode(node *t1, node *t2) {
+        if (!t1)
+            return t2;
+        if (!t2)
+            return t1;
+        t1->data += t2->data;
+        t1->left = mergeNode(t1->left, t2->left);
+        t1->right = mergeNode(t1->right, t2->right);
+        return t1;
     }
 
    public:
@@ -95,11 +99,12 @@ class BST {
     BST();
     // ~BST();
     BST(T);
+    BST(node *);
     void insert(T);
     void remove(T);
     void print();
     int maxHeight();
-    BST merge(BST t1, BST t2);
+    BST merge(BST t2);
 };
 
 #endif

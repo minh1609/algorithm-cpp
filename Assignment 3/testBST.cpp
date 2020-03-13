@@ -1,10 +1,26 @@
 #include <ctime>
 #include <iostream>
+#include <stack>
+#include <string>
 #include <vector>
 
 #include "BST.cpp"
+#include "BST.h"
 
 using namespace std;
+
+string getExpression() {
+    string str;
+    cerr << "Enter infix expression";
+    cin >> str;
+    return str;
+}
+
+int getInput() {
+    srand(time(0));
+    int num = (rand() % (10 - 2 + 1)) + 2;
+    return 5;
+}
 
 template <typename T>
 vector<T> genData(T n) {
@@ -31,7 +47,7 @@ BST<T> makeBST(vector<T> v) {
 }
 
 template <typename T>
-void printBST(BST<T> bst) {
+void printBT(BST<T> bst) {
     bst.print();
 }
 
@@ -47,57 +63,103 @@ void remove(T key, BST<T> t) {
 
 template <typename T>
 BST<T> mergeBST(BST<T> t1, BST<T> t2) {
-    return t1.merge(t1, t2);
+    return t1.merge(t2);
+}
+
+template <typename T>
+void printList(vector<T> v) {
+    for (int i = 0; i < v.size(); i++) {
+        cerr << v[i] << " ";
+    }
+    cerr << endl;
+}
+
+//EXPRESSION TREE
+int priority(char c) {
+    if (c == '*' || c == '/')
+        return 1;
+    else if (c == '+' || c == '-')
+        return 0;
+    else
+        return -1;
+}
+string InfixPostfixExpr(string str) {
+    stack<char> s;
+    s.push('A');
+    int l = str.length();
+    string result;
+    for (int i = 0; i < l; i++) {
+        if ((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z'))
+            result += str[i];
+
+        else if (str[i] == '(')
+
+            s.push('(');
+
+        else if (str[i] == ')') {
+            while (s.top() != 'A' && s.top() != '(') {
+                char c = s.top();
+                s.pop();
+                result += c;
+            }
+            if (s.top() == '(') {
+                char c = s.top();
+                s.pop();
+            }
+        }
+
+        else {
+            while (s.top() != 'A' && priority(str[i]) <= priority(s.top())) {
+                char c = s.top();
+                s.pop();
+                result += c;
+            }
+            s.push(str[i]);
+        }
+    }
+    while (s.top() != 'A') {
+        char c = s.top();
+        s.pop();
+        result += c;
+    }
+
+    return result;
 }
 
 int main() {
-    // // declaration of your variables ...
-    // n1 = getInput();      // either generates a random non-negative
-    //                       // integer or reads it from input
-    // list1 = genData(n1);  //generates a list of n1 random numbers [-n1, n1]
-    // cout << "The List1: ";
-    // printList(list1);  //prints elements of the given list
-    // n2 = getInput();
-    // list2 = genData(n2);  //generates a list of n2 random numbers [-n2, n2]
-    // printList(list2);
-    // bst1 = makeBST(list1);
-    // cout << "In-order traversal of bst1 is: ";
-    // printBT(bst1);
-    // remove(list1[n1 / 2], bst1);  // removes list1[n1/2] from corresponding tree (bst1)
+    // declaration of your variables ...
+    int n1 = getInput();              // either generates a random non-negative
+                                      // integer or reads it from input
+    vector<int> list1 = genData(n1);  //generates a list of n1 random numbers [-n1, n1]
+    cout << "The List1: ";
+    printList(list1);  //prints elements of the given list
+    int n2 = getInput();
+    vector<int> list2 = genData(n2);  //generates a list of n2 random numbers [-n2, n2]
+    printList(list2);
+    BST<int> bst1 = makeBST(list1);
+    cout << "In-order traversal of bst1 is: ";
+    printBT(bst1);
+    remove(list1[n1 / 2], bst1);  // removes list1[n1/2] from corresponding tree (bst1)
 
-    // cout << "In-order traversal of bst1 after deleting " << list1[n1 / 2] << " is: ";
-    // printBT(bst1);
-    // bst2 = makeBST(list2);
-    // cout << "In-order traversal of bst2 is: ";
-    // printBT(bst2);
-    // bst3 = mergeBST(bst1, bst2);
-    // cout << "In_order traversal of bst3 is: ";
-    // printBT(bst3);
-    // cout << "The height of bst1 is " << height(bst1) << endl;
-    // cout << "The height of bst2 is " << height(bst2) << endl;
-    // cout << "The height of merged tree is " << height(bst3) << endl;
-    // string infix = getExpression();  // read infix expression from input
+    cout << "In-order traversal of bst1 after deleting " << list1[n1 / 2] << " is: ";
+    printBT(bst1);
+    BST<int> bst2 = makeBST(list2);
+    cout << "In-order traversal of bst2 is: ";
+    printBT(bst2);
+    BST<int> bst3 = mergeBST(bst1, bst2);
+    cout << "In_order traversal of bst3 is: ";
+    printBT(bst3);
+    cout << "The height of bst1 is " << height(bst1) << endl;
+    cout << "The height of bst2 is " << height(bst2) << endl;
+    cout << "The height of merged tree is " << height(bst3) << endl;
+    string infix = getExpression();  // read infix expression from input
+
+    //3A NOT COMPLETE
     // bt4 = infixExprTree(infix);
     // cout << "In-order traversal of bt4 is: ";
     // printBT(bt4);
-    // cout << "The postfix expression is " << InfixPostfixExpr(infix) << endl;
 
-    BST<int> t;
-    BST<int> t2;
-    t.insert(20);
-    t.insert(25);
-    t.insert(15);
-    t.insert(10);
-    t.insert(30);
-
-    t2.insert(12);
-    t2.insert(2);
-    t2.insert(17);
-    t2.insert(16);
-    t2.insert(1);
-
-    cerr << height(t);
-    mergeBST(t, t2);
+    cout << "The postfix expression is " << InfixPostfixExpr(infix) << endl;
 
     return 0;
 }
