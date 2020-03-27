@@ -26,7 +26,8 @@ class Hash {
     int additive(string str) {
         int result = 0;
         for (int i = 0; i < str.size(); i++) {
-            result = result + (int)str[i];
+            int x = (int)str[i];
+            result = result + x;
         }
         return result % SIZE;
     }
