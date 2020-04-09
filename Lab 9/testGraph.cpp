@@ -28,27 +28,7 @@ bool keepTrack(vector<Edge> v, int f, int t) {
     return false;
 }
 
-void printList(vector<vector<int> > list, int number) {
-    // for (int i = 0; i < number; i++) {
-    //     cout << "index " << i << ": {";
-    //     for (int j = 0; i < list[i].size(); j++) {
-    //         int x = list[i][j];
-    //         cout << x << ",";
-    //     }
-
-    //     cout << "}" << endl;
-    // }
-
-    for (int i = 0; i < list.size(); i++) {
-        cout << "index " << i << ": {";
-
-        for (int j = 0; j < list[i].size(); j++) {
-            cout << list[i][j] << " ";
-        }
-    }
-}
-
-void printedges(vector<Edge> v) {
+void printEdges(vector<Edge> v) {
     cout << "Edges: " << endl;
 
     for (int i = 0; i < v.size(); i++) {
@@ -71,35 +51,33 @@ void makeSparseUDWG(int n) {
     srand(time(0));
 
     if (n <= 10) return;
-    int edgeC = rand() % (2 * n) + 1;
+    int totalEdge = rand() % (2 * n) + 1;
 
-    vector<Edge> ve;
-    vector<vector<int> > result(edgeC, vector<int>(0));
+    vector<Edge> edgeList;
+    vector<vector<int> > result(totalEdge, vector<int>(0));
     srand(time(0));
     int count = 0;
 
-    while (count < edgeC) {
+    while (count < totalEdge) {
         int f = rand() % n;
         int s = rand() % n;
         int w = rand() % 99 + 1;
-        if (!keepTrack(ve, f, s) && f != s) {
+        if (!keepTrack(edgeList, f, s) && f != s) {
             Edge e1(f, s, w);
-            ve.push_back(e1);
+            edgeList.push_back(e1);
             count++;
         }
     }
-    printedges(ve);
-    printGraph("sample.txt", ve);
+    printEdges(edgeList);
+    printGraph("sample.txt", edgeList);
 
-    for (int i = 0; i < edgeC; i++) {
-        Edge temp = ve.at(i);
+    for (int i = 0; i < totalEdge; i++) {
+        Edge temp = edgeList.at(i);
         int source = temp.from;
         int dest = temp.to;
         result[source].push_back(dest);
         result[dest].push_back(source);
     }
-    printList(result, n);
-    cout << endl;
 }
 
 void makeDenseDWG(int n) {
@@ -114,7 +92,7 @@ void makeDenseDWG(int n) {
             matrix[i][j] = 0;
         }
     }
-    vector<Edge> ve;
+    vector<Edge> edgeList;
     srand(time(0));
     int count = 0;
     while (count < totalEdge) {
@@ -123,13 +101,13 @@ void makeDenseDWG(int n) {
         int w = rand() % 99 + 1;
 
         if (matrix[f][t] != 1) {
-            Edge e1(f, t, w);
-            ve.push_back(e1);
+            Edge e(f, t, w);
+            edgeList.push_back(e);
             matrix[f][t] = 1;
             count++;
         }
     }
-    printedges(ve);
+    printEdges(edgeList);
 
     cout << "  ";
     for (int i = 0; i < n; i++) {
@@ -147,10 +125,11 @@ void makeDenseDWG(int n) {
 }
 
 int main() {
-    //makeSparseUDWG(11);
+    cerr << "Part b" << endl;
     makeDenseDWG(11);
 
-    int def[4][3];
+    cerr << "Part a c" << endl;
+    makeSparseUDWG(11);
 
     return 0;
 }

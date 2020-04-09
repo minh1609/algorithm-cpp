@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "BST.cpp"
-#include "BST.h"
 
 using namespace std;
 
