@@ -5,7 +5,7 @@
             "label": "build",
             "type": "shell",
             "command": "g++",
-            "args": ["testBST.cpp", "-o", "${workspaceFolderBasename}"],
+            "args": ["testAVL.cpp", "-o", "${workspaceFolderBasename}"],
             "problemMatcher": []
         },
         {

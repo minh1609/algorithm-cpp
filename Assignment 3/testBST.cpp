@@ -18,7 +18,7 @@ string getExpression() {
 int getInput() {
     srand(time(0));
     int num = (rand() % (10 - 2 + 1)) + 2;
-    return 5;
+    return num;
 }
 
 template <typename T>
