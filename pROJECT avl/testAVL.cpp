@@ -19,7 +19,7 @@ void genInputFile(int n, string filename) {
     fout << n;
 
     for (int i = 0; i < n; i++) {
-        int num = rand() % 2000 + 1;
+        int num = rand() % 4000 + 1000;
         fout << "\n"
              << num;
     }
@@ -62,26 +62,24 @@ void printAVL(AVLTree<T>* tree) {
 int main() {
     int n = getInput();
     genInputFile(n, "text.txt");
-    AVLTree<int>* avl = BuildAVLTree("text.txt");
+    AVLTree<int> avl = *BuildAVLTree("text.txt");
 
-    cout << "height of AVL tree is:" << avl->height() << endl;
-    printAVL(avl);
+    cout << "height of AVL tree is:" << avl.height() << endl;
+    printAVL(&avl);
 
-    // int node;
-    // cout << "Enter a value to insert: ";
-    // cin >> node;
-    // InsertNodeAVL(avl, node);
-    // cout << "height of AVL tree is:" << avl->height() << endl;
-    // printAVL(avl);
+    int node;
+    cout << "Enter a value to insert: ";
+    cin >> node;
+    InsertNodeAVL(&avl, node);
+    cout << "height of AVL tree is:" << avl.height() << endl;
+    printAVL(&avl);
 
-    // cout << "Enter a value to delete: ";
-    // cin >> node;
-    // DeleteNodeAVL(avl, node);
-    // cout << "height of AVL tree is:" << avl->height() << endl;
-    // printAVL(avl);
+    cout << "Enter a value to delete: ";
+    cin >> node;
+    DeleteNodeAVL(&avl, node);
+    cout << "height of AVL tree is:" << avl.height() << endl;
+    printAVL(&avl);
 
-    // DeleteAVLTree(avl);
-    // printAVL(avl);
-
-    return 0;
+    DeleteAVLTree(&avl);
+    printAVL(&avl);
 }

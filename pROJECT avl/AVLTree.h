@@ -82,8 +82,9 @@ class AVLTree {
     }
 
     void inOrder(node* n) {
-        if (n == nullptr)
+        if (n == nullptr) {
             return;
+        }
         inOrder(n->left);
         cout << n->data << " ";
         inOrder(n->right);
