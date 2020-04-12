@@ -10,6 +10,8 @@ class Cell {
    public:
     int x, y;
     int dis;
+    vector<Cell> path;
+
     Cell() {}
     Cell(int x, int y, int dis) {
         this->x = x;
@@ -17,12 +19,18 @@ class Cell {
         this->dis = dis;
     }
     void print() {
-        cerr << "[" << x << "," << y << "]" << endl;
+        cerr << "[" << x << "," << y << "] dis: " << dis << endl;
     }
 };
 
-// Utility method returns true if (x, y) lies
-// inside Board
+void printVector(vector<Cell> v) {
+    cerr << "#####" << endl;
+    for (int i = 0; i < v.size(); i++) {
+        v[i].print();
+    }
+    cerr << "#####" << endl;
+}
+
 bool isInside(int x, int y) {
     if (x >= 0 && x <= 7 && y >= 0 && y <= 7)
         return true;
@@ -36,12 +44,12 @@ int minStepToReachTarget(int knightPosition[], int target[]) {
     int dy[] = {-1, -2, -2, -1, 1, 2, 2, 1};
 
     // queue for storing states of knight in board
-    queue<Cell> q;
+    vector<Cell> q;
 
     // push starting position of knight with 0 distance
-    q.push(Cell(knightPosition[0], knightPosition[1], 0));
+    q.push_back(Cell(knightPosition[0], knightPosition[1], 0));
 
-    Cell t;
+    Cell temp;
     int x, y;
     bool visit[8][8];
 
@@ -52,25 +60,26 @@ int minStepToReachTarget(int knightPosition[], int target[]) {
 
     // loop untill we have one element in queue
     while (!q.empty()) {
-        t = q.front();
-        q.pop();
+        temp = q[0];
+        temp.print();
+        q.erase(q.begin());
 
         // if current cell is equal to target cell,
         // return its distance
-        if (t.x == target[0] && t.y == target[1]) {
-            return t.dis;
+        if (temp.x == target[0] && temp.y == target[1]) {
+            return temp.dis;
         }
 
         // loop for all reachable states
         for (int i = 0; i < 8; i++) {
-            x = t.x + dx[i];
-            y = t.y + dy[i];
+            x = temp.x + dx[i];
+            y = temp.y + dy[i];
 
             // If reachable state is not yet visited and
             // inside board, push that state into queue
             if (isInside(x, y) && !visit[x][y]) {
                 visit[x][y] = true;
-                q.push(Cell(x, y, t.dis + 1));
+                q.push_back(Cell(x, y, temp.dis + 1));
             }
         }
     }
